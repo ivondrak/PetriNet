@@ -10,9 +10,13 @@ class PetriNet:
     def add_transition(self, transition):
         self.transitions.append(transition)
 
-    def run(self):
+    def step(self):
         for transition in self.transitions:
             transition.fire()
+
+    def run(self):
+        while any(transition.is_enabled() for transition in self.transitions):
+            self.step()
 
     def print_marking(self):
         print("Places:")

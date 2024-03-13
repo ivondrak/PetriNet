@@ -49,11 +49,11 @@ def run_petrinet():
     checking_payment = Transition("Checking payment", [p02, p12, p40, p50], [p13, p03], transition_fired)
     car_hand_over = Transition("Car hand over", [p13, p03, p60], [p70], transition_fired)
 
+    pn.add_transition(checking_payment)
+    pn.add_transition(car_hand_over)
     pn.add_transition(car_selection)
     pn.add_transition(car_ordering)
     pn.add_transition(get_financing)
-    pn.add_transition(checking_payment)
-    pn.add_transition(car_hand_over)
 
     pn.print_marking()
     pn.run()
