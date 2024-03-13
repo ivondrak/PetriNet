@@ -1,4 +1,3 @@
-from place import Place
 class Transition:
 
     def __init__(self, name, input_places=(), output_places=(), callback=None):
@@ -6,7 +5,6 @@ class Transition:
         self.input_places = input_places
         self.output_places = output_places
         self.callback = callback
-
 
     def add_input_place(self, place):
         self.input_places.append(place)

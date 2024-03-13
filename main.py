@@ -59,9 +59,10 @@ def run_petrinet():
     pn.run()
     pn.print_marking()
 
+
 def transition_fired(transition_name):
     print(f"Transition {transition_name} fired!")
 
-# Press the green button in the gutter to run the script.
+
 if __name__ == '__main__':
     run_petrinet()

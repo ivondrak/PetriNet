@@ -1,5 +1,3 @@
-from place import Place
-from transition import Transition
 
 class PetriNet:
     def __init__(self):
@@ -19,5 +17,7 @@ class PetriNet:
     def print_marking(self):
         print("Places:")
         for place in self.places:
-            place.print()
+            if place.get_tokens() > 0:
+                place.print()
+
 

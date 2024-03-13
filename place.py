@@ -5,7 +5,7 @@ class Place:
 
     def get_tokens(self):
         return self.tokens
-    
+
     def add_token(self):
         self.tokens += 1
 
@@ -14,4 +14,4 @@ class Place:
             self.tokens -= 1
 
     def print(self):
-        print("Place " + self.name + " has " + str(self.tokens) + " tokens")
+        print("Place " + self.name + " has " + str(self.tokens) + " token(s)")
