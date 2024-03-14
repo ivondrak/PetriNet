@@ -25,3 +25,12 @@ class Transition:
                 self.callback(self.name)
             for place in self.output_places:
                 place.add_token()
+
+    def print(self):
+        print(f"Transition: {self.name}")
+        print("Input Places: ")
+        for place in self.input_places:
+            place.print()
+        print(f"Output Places: ")
+        for place in self.output_places:
+            place.print()

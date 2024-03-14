@@ -23,5 +23,3 @@ class PetriNet:
         for place in self.places:
             if place.get_tokens() > 0:
                 place.print()
-
-
