@@ -68,7 +68,7 @@ class PetriNetGraph:
         for place_key, coords in self.places.items():
             tokens_count = self.tokens[place_key].get_tokens()
             if tokens_count > 0:
-                ax.add_patch(patches.Circle((coords[0],coords[1]), 0.25, color='black', fill=True))
+                ax.add_patch(patches.Circle((coords[0],coords[1]), 0.1, color='red', fill=True, zorder=2))
 
         ax.axis('equal')
         plt.show()
