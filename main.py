@@ -2,6 +2,7 @@
 from petrinet import PetriNet
 from place import Place
 from transition import Transition
+from petrinetgraph import PetriNetGraph, GPlace, GTransition
 
 
 # Press ⌃R to execute it or replace it with your code.
@@ -54,6 +55,21 @@ def run_petrinet():
     pn.add_transition(car_selection)
     pn.add_transition(car_ordering)
     pn.add_transition(get_financing)
+
+    g_places = [GPlace(p00, 1, 1), GPlace(p10, 1, 2),
+                GPlace(p01, 3, 1), GPlace(p20, 3, 2), GPlace(p11, 3, 3), GPlace(p21, 3, 4),
+                GPlace(p02, 5, 1), GPlace(p50, 5, 2), GPlace(p40, 5, 3), GPlace(p12, 5, 4), GPlace(p60, 5, 5),
+                GPlace(p03, 7, 1), GPlace(p13, 7, 2),
+                GPlace(p70, 9, 2)]
+
+    g_transitions = [GTransition(car_selection, 2, 1),
+                     GTransition(get_financing, 4, 1),
+                     GTransition(car_ordering, 4, 4),
+                     GTransition(checking_payment, 6, 1),
+                     GTransition(car_hand_over, 8, 2)]
+
+    png = PetriNetGraph(g_places, g_transitions)
+    png.draw_graph()
 
     pn.print_marking()
     pn.run()
