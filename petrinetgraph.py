@@ -13,17 +13,21 @@ class GTransition:
         self.transition = transition
         self.x = x_coord
         self.y = y_coord
+
 class PetriNetGraph:
-    def __init__(self, g_places, g_transitions):
+    def __init__(self, g_places, g_transitions, figsize=(15, 8)):
         self.graph = nx.DiGraph()
-        index = 0
+        self.figsize = figsize
         self.labels = {}
         self.places = {}
+        self.tokens = {}
         self.transitions = {}
         self.edges = []
+        index = 0
         for g_place in g_places:
             key = "P" + str(index)
             self.places[key] = (g_place.x, g_place.y)
+            self.tokens[key] = g_place.place
             self.labels[key] = g_place.place.name
             index += 1
         index = 0
@@ -47,7 +51,7 @@ class PetriNetGraph:
         self.graph.add_edges_from(self.edges)
 
     def draw_graph(self):
-        fig, ax = plt.subplots(figsize=(15, 5))
+        fig, ax = plt.subplots(figsize=self.figsize)
         pos = {**self.places, **self.transitions}
 
         # Draw the places as circles
@@ -60,5 +64,12 @@ class PetriNetGraph:
         # Draw edges and labels
         nx.draw_networkx_edges(self.graph, pos, node_size=1000, arrowstyle='->', arrowsize=10, width=1, edge_color="gray")
         nx.draw_networkx_labels(self.graph, pos, labels=self.labels, font_size=8, font_color='black')
+
+        for place_key, coords in self.places.items():
+            tokens_count = self.tokens[place_key].get_tokens()
+            if tokens_count > 0:
+                ax.add_patch(patches.Circle((coords[0],coords[1]), 0.25, color='black', fill=True))
+
+        ax.axis('equal')
         plt.show()
 
