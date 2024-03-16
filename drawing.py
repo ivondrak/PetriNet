@@ -4,7 +4,7 @@ import networkx as nx
 
 
 def draw_petri_net():
-    fig, ax = plt.subplots(figsize=(15,5))
+    fig, ax = plt.subplots(figsize=(15, 8))
 
     # Define a directed graph
     G = nx.DiGraph()
@@ -33,7 +33,7 @@ def draw_petri_net():
              ("T1", "P01"), ("T1", "P11"), ("T1", "P20"), ("T1", "P21"),
              ("P01", "T2"), ("P20", "T2"), ("P11", "T3"), ("P21", "T3"),
              ("T3", "P12"), ("T3", "P60"), ("T2", "P02"), ("T2", "P50"),
-             ("P02", "T4"), ("P50","T4"), ("P12", "T4"), ("P40", "T4"),
+             ("P02", "T4"), ("P50", "T4"), ("P12", "T4"), ("P40", "T4"),
              ("T4", "P03"), ("T4", "P13"),
              ("P60", "T5"), ("P03", "T5"), ("P13", "T5"),
              ("T5", "P70")]

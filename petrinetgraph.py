@@ -2,17 +2,20 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import networkx as nx
 
+
 class GPlace:
     def __init__(self, place, x_coord, y_coord):
         self.place = place
         self.x = x_coord
         self.y = y_coord
 
+
 class GTransition:
     def __init__(self, transition, x_coord, y_coord):
         self.transition = transition
         self.x = x_coord
         self.y = y_coord
+
 
 class PetriNetGraph:
     def __init__(self, g_places, g_transitions, figsize=(15, 8)):
@@ -55,21 +58,22 @@ class PetriNetGraph:
         pos = {**self.places, **self.transitions}
 
         # Draw the places as circles
-        nx.draw_networkx_nodes(self.graph, pos, nodelist=self.places.keys(), node_size=1000, node_color="lightgray", ax=ax)
+        nx.draw_networkx_nodes(self.graph, pos, nodelist=self.places.keys(), node_size=1000, node_color="lightgray",
+                               ax=ax)
 
         # Draw the transitions as rectangles
         for transition, coord in self.transitions.items():
             ax.add_patch(patches.Rectangle((coord[0], coord[1]), 0.2, 0.2, color="white", fill=False))
 
         # Draw edges and labels
-        nx.draw_networkx_edges(self.graph, pos, node_size=1000, arrowstyle='->', arrowsize=10, width=1, edge_color="gray")
+        nx.draw_networkx_edges(self.graph, pos, node_size=1000, arrowstyle='->', arrowsize=10, width=1,
+                               edge_color="gray")
         nx.draw_networkx_labels(self.graph, pos, labels=self.labels, font_size=8, font_color='black')
 
         for place_key, coords in self.places.items():
             tokens_count = self.tokens[place_key].get_tokens()
             if tokens_count > 0:
-                ax.add_patch(patches.Circle((coords[0],coords[1]), 0.25, color='black', fill=True))
+                ax.add_patch(patches.Circle((coords[0], coords[1]), 0.1, color='red', fill=True, zorder=2))
 
         ax.axis('equal')
         plt.show()
-
