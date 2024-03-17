@@ -13,5 +13,8 @@ class Place:
         if self.tokens > 0:
             self.tokens -= 1
 
+    def reset(self):
+        self.tokens = 0
+
     def print(self):
         print("Place " + self.name + " has " + str(self.tokens) + " token(s)")

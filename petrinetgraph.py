@@ -59,16 +59,19 @@ class PetriNetGraph:
 
         # Draw the transitions as rectangles
         for transition, coord in self.transitions.items():
-            ax.add_patch(patches.Rectangle((coord[0], coord[1]), 0.2, 0.2, color="white", fill=False))
+            width = 0.2
+            height = 0.2
+            ax.add_patch(patches.Rectangle((coord[0] - width/2, coord[1] - height/2), width, height, color="gray", fill=False))
 
         # Draw edges and labels
         nx.draw_networkx_edges(self.graph, pos, node_size=1000, arrowstyle='->', arrowsize=10, width=1, edge_color="gray")
-        nx.draw_networkx_labels(self.graph, pos, labels=self.labels, font_size=8, font_color='black')
+        label_pos = {node: (coords[0], coords[1] - 0.25) for node, coords in pos.items()}
+        nx.draw_networkx_labels(self.graph, label_pos, labels=self.labels, font_size=8, font_color='black')
 
         for place_key, coords in self.places.items():
             tokens_count = self.tokens[place_key].get_tokens()
             if tokens_count > 0:
-                ax.add_patch(patches.Circle((coords[0],coords[1]), 0.25, color='black', fill=True))
+                ax.add_patch(patches.Circle((coords[0], coords[1]), 0.1, color='red', fill=True, zorder=2))
 
         ax.axis('equal')
         plt.show()

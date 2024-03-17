@@ -21,7 +21,7 @@ class Transition:
         if self.is_enabled():
             for place in self.input_places:
                 place.remove_token()
-            if self.callback:
+            if self.callback is not None:
                 self.callback(self.name)
             for place in self.output_places:
                 place.add_token()
