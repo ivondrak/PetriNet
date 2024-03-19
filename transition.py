@@ -34,3 +34,29 @@ class Transition:
         print(f"Output Places: ")
         for place in self.output_places:
             place.print()
+
+class P_Transition(Transition):
+
+    def __init__(self, name, input_places=(), output_places=(), callback=None, lock=None):
+        super().__init__(name, input_places, output_places, callback)
+        self.fired = False
+        self.lock = lock
+
+    def fire(self):
+        if not self.deduct_tokens():
+            # cannot fire due to insufficient tokens
+            return
+        self.fired = True
+        if self.callback is not None:
+            self.callback(self.name)
+        for place in self.output_places:
+            place.add_token()
+
+    def deduct_tokens(self):
+        with self.lock:  # using the same lock object from PetriNet class
+            if all(place.tokens > 0 for place in self.input_places):
+                for place in self.input_places:
+                    place.remove_token()
+                return True
+            else:
+                return False
