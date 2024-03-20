@@ -17,7 +17,7 @@ class Transition:
             return False
         return all(place.get_tokens() > 0 for place in self.input_places)
 
-    def fire(self):
+    def fire(self, show_state=None):
         if self.is_enabled():
             for place in self.input_places:
                 place.remove_token()
@@ -42,21 +42,27 @@ class P_Transition(Transition):
         self.fired = False
         self.lock = lock
 
-    def fire(self):
-        if not self.deduct_tokens():
+    def fire(self, show_state=None):
+        if not self.deduct_tokens(show_state):
             # cannot fire due to insufficient tokens
             return
-        self.fired = True
         if self.callback is not None:
             self.callback(self.name)
-        for place in self.output_places:
-            place.add_token()
+        self.fired = False
+        with self.lock:
+            for place in self.output_places:
+                place.add_token()
+            if show_state is not None:
+                show_state()
 
-    def deduct_tokens(self):
+    def deduct_tokens(self, show_state):
         with self.lock:  # using the same lock object from PetriNet class
             if all(place.tokens > 0 for place in self.input_places):
                 for place in self.input_places:
                     place.remove_token()
+                self.fired = True
+                if show_state is not None:
+                    show_state()
                 return True
             else:
                 return False

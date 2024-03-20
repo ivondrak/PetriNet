@@ -22,6 +22,7 @@ class PetriNetGraph:
         self.places = {}
         self.tokens = {}
         self.transitions = {}
+        self.fired = {}
         self.edges = []
         index = 0
         for g_place in g_places:
@@ -34,6 +35,7 @@ class PetriNetGraph:
         for g_transition in g_transitions:
             key = "T" + str(index)
             self.transitions[key] = (g_transition.x, g_transition.y)
+            self.fired[key] = g_transition.transition
             self.labels[key] = g_transition.transition.name
             for input_place in g_transition.transition.input_places:
                 for i in range(len(g_places)):
@@ -72,6 +74,12 @@ class PetriNetGraph:
             tokens_count = self.tokens[place_key].get_tokens()
             if tokens_count > 0:
                 ax.add_patch(patches.Circle((coords[0], coords[1]), 0.1, color='red', fill=True, zorder=2))
+
+        for transition_key, coords in self.transitions.items():
+            if self.fired[transition_key].fired:
+                width = 0.1
+                height = 0.1
+                ax.add_patch(patches.Rectangle((coords[0] - width/2, coords[1] - height/2), width, height, color='red', fill=True, zorder=2))
 
         ax.axis('equal')
         plt.show()

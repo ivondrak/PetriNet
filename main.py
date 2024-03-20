@@ -3,6 +3,8 @@ from petrinet import PetriNet, P_PetriNet
 from place import Place
 from transition import Transition, P_Transition
 from petrinetgraph import PetriNetGraph, GPlace, GTransition
+import time
+import random
 
 
 # Press ⌃R to execute it or replace it with your code.
@@ -69,7 +71,6 @@ def run_petrinet():
                      GTransition(car_hand_over, 8, 2)]
 
     png = PetriNetGraph(g_places, g_transitions)
-    png.draw_graph()
 
     pn.print_marking()
     pn.run(png.draw_graph)
@@ -77,7 +78,9 @@ def run_petrinet():
 
 
 def transition_fired(transition_name):
-    print(f"Transition {transition_name} fired!")
+    pause = random.uniform(1,5)
+    time.sleep(pause)
+    print(f"Transition {transition_name} has been fired for {round(pause, 2)} seconds.!")
 
 
 if __name__ == '__main__':
