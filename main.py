@@ -78,9 +78,10 @@ def run_petrinet():
 
 
 def transition_fired(transition_name):
-    pause = random.uniform(1,5)
+    pause = random.uniform(1,3)
+    print(f"Transition {transition_name} started.")
     time.sleep(pause)
-    print(f"Transition {transition_name} has been fired for {round(pause, 2)} seconds.!")
+    print(f"Transition {transition_name} finished after {round(pause, 2)} seconds.")
 
 
 if __name__ == '__main__':
