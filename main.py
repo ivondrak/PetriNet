@@ -1,8 +1,11 @@
 # This is a sample Python script.
-from petrinet import PetriNet
+from petrinet import PetriNet, P_PetriNet
 from place import Place
-from transition import Transition
+from transition import Transition, P_Transition
 from petrinetgraph import PetriNetGraph, GPlace, GTransition
+import time
+import random
+
 
 
 
@@ -11,7 +14,7 @@ from petrinetgraph import PetriNetGraph, GPlace, GTransition
 
 def run_petrinet():
 
-    pn = PetriNet()
+    pn = P_PetriNet()
 
     p00 = Place("Customer", 1)
     p01 = Place("Customer")
@@ -45,11 +48,11 @@ def run_petrinet():
     pn.add_place(p60)
     pn.add_place(p70)
 
-    car_selection = Transition("Car selection", [p00, p10], [p01, p11, p20, p21], transition_fired)
-    car_ordering = Transition("Car ordering", [p11, p21], [p12, p60], transition_fired)
-    get_financing = Transition("Get financing", [p01, p20], [p02, p50], transition_fired)
-    checking_payment = Transition("Checking payment", [p02, p12, p40, p50], [p13, p03], transition_fired)
-    car_hand_over = Transition("Car hand over", [p13, p03, p60], [p70], transition_fired)
+    car_selection = P_Transition("Car selection", [p00, p10], [p01, p11, p20, p21], transition_fired)
+    car_ordering = P_Transition("Car ordering", [p11, p21], [p12, p60], transition_fired)
+    get_financing = P_Transition("Get financing", [p01, p20], [p02, p50], transition_fired)
+    checking_payment = P_Transition("Checking payment", [p02, p12, p40, p50], [p13, p03], transition_fired)
+    car_hand_over = P_Transition("Car hand over", [p13, p03, p60], [p70], transition_fired)
 
     pn.add_transition(checking_payment)
     pn.add_transition(car_hand_over)
@@ -63,22 +66,24 @@ def run_petrinet():
                 GPlace(p03, 7, 1), GPlace(p13, 7, 2),
                 GPlace(p70, 9, 2)]
 
-    g_transitions = [GTransition(car_selection, 2, 1),
-                     GTransition(get_financing, 4, 1),
+    g_transitions = [GTransition(car_selection, 2, 2),
+                     GTransition(get_financing, 4, 2),
                      GTransition(car_ordering, 4, 4),
-                     GTransition(checking_payment, 6, 1),
+                     GTransition(checking_payment, 6, 2),
                      GTransition(car_hand_over, 8, 2)]
 
     png = PetriNetGraph(g_places, g_transitions)
-    png.draw_graph()
 
     pn.print_marking()
-    pn.run()
+    pn.run(png.draw_graph)
     pn.print_marking()
 
 
 def transition_fired(transition_name):
-    print(f"Transition {transition_name} fired!")
+    pause = random.uniform(1,3)
+    print(f"Transition {transition_name} started.")
+    time.sleep(pause)
+    print(f"Transition {transition_name} finished after {round(pause, 2)} seconds.")
 
 
 if __name__ == '__main__':
