@@ -64,10 +64,10 @@ def run_petrinet():
                 GPlace(p03, 7, 1), GPlace(p13, 7, 2),
                 GPlace(p70, 9, 2)]
 
-    g_transitions = [GTransition(car_selection, 2, 1),
-                     GTransition(get_financing, 4, 1),
+    g_transitions = [GTransition(car_selection, 2, 2),
+                     GTransition(get_financing, 4, 2),
                      GTransition(car_ordering, 4, 4),
-                     GTransition(checking_payment, 6, 1),
+                     GTransition(checking_payment, 6, 2),
                      GTransition(car_hand_over, 8, 2)]
 
     png = PetriNetGraph(g_places, g_transitions)
