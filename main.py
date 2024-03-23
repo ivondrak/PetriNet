@@ -1,4 +1,7 @@
 # This is a sample Python script.
+import matplotlib
+matplotlib.use('Agg')
+
 from petrinet import PetriNet, P_PetriNet
 from place import Place
 from transition import Transition, P_Transition
@@ -73,7 +76,11 @@ def run_petrinet():
     png = PetriNetGraph(g_places, g_transitions)
 
     pn.print_marking()
-    pn.run(png.draw_graph)
+    print(matplotlib.get_backend())
+    if matplotlib.get_backend() == "agg":
+        pn.run(png.save_graph)
+    else:
+        pn.run(png.show_graph)
     pn.print_marking()
 
 

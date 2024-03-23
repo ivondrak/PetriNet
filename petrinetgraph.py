@@ -15,6 +15,7 @@ class GTransition:
         self.y = y_coord
 
 class PetriNetGraph:
+    count = 0
     def __init__(self, g_places, g_transitions, figsize=(15, 8)):
         self.graph = nx.DiGraph()
         self.figsize = figsize
@@ -82,5 +83,14 @@ class PetriNetGraph:
                 ax.add_patch(patches.Rectangle((coords[0] - width/2, coords[1] - height/2), width, height, color='red', fill=True, zorder=2))
 
         ax.axis('equal')
+
+    def show_graph(self):
+        self.draw_graph()
         plt.show()
+
+    def save_graph(self):
+        self.draw_graph()
+        self.count += 1
+        filename = "petrinetgraph" + "-" + str(self.count) + ".png"
+        plt.savefig(filename)
 
