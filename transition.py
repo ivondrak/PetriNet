@@ -5,8 +5,8 @@ from place import Place
 
 class Transition:
     name: str
-    input_place: list[Place]
-    output_places: tuple[list[Place], list[Place]]
+    input_place: List[Place]
+    output_places: tuple[List[Place], List[Place]]
     callback: Callable[[str], bool]
     fired: bool
 

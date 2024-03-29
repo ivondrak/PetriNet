@@ -1,12 +1,12 @@
 from threading import Thread, Lock
-from typing import Callable
+from typing import List, Callable
 from place import Place
 from transition import Transition, P_Transition
 
 
 class PetriNet:
-    places: list[Place]
-    transitions: list[Transition]
+    places: List[Place]
+    transitions: List[Transition]
 
     def __init__(self):
         self.places = []
