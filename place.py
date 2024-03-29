@@ -1,5 +1,8 @@
-class Place:
-    def __init__(self, name, initial=0):
+cclass Place:
+    name: str
+    tokens: int
+
+    def __init__(self, name: str, initial: int = 0):
         self.name = name
         self.tokens = initial
 

@@ -1,18 +1,24 @@
 from threading import Thread, Lock
+from typing import Callable
+from place import Place
+from transition import Transition, P_Transition
 
 
 class PetriNet:
+    places: list[Place]
+    transitions: list[Transition]
+
     def __init__(self):
         self.places = []
         self.transitions = []
 
-    def add_place(self, place):
+    def add_place(self, place: Place):
         self.places.append(place)
 
-    def add_transition(self, transition):
+    def add_transition(self, transition: Transition):
         self.transitions.append(transition)
 
-    def run(self, show_state=None):
+    def run(self, show_state: Callable[[], None] = None):
         while any(transition.is_enabled() for transition in self.transitions):
             for transition in self.transitions:
                 if transition.is_enabled():
@@ -34,15 +40,17 @@ class PetriNet:
 
 
 class P_PetriNet(PetriNet):
+    lock: Lock
+
     def __init__(self):
         super().__init__()
         self.lock = Lock()
 
-    def add_transition(self, transition):
+    def add_transition(self, transition: P_Transition):
         super().add_transition(transition)
         transition.lock = self.lock
 
-    def run(self, show_state=None):
+    def run(self, show_state: Callable[[], None] = None):
         if show_state is not None:
             show_state()
         while any(transition.is_enabled() for transition in self.transitions):
@@ -55,5 +63,5 @@ class P_PetriNet(PetriNet):
             for thread in threads:
                 thread.join()
 
-    def run_transition(self, transition, show_state):
+    def run_transition(self, transition: P_Transition, show_state: Callable[[], None]):
         transition.fire(show_state)
