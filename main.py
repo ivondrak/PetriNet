@@ -1,6 +1,6 @@
 # This is a sample Python script.
 import matplotlib 
-# matplotlib.use('Agg')
+matplotlib.use('Agg')
 
 from petrinet import P_PetriNet
 from place import Place

@@ -1,4 +1,4 @@
-cclass Place:
+class Place:
     name: str
     tokens: int
 
